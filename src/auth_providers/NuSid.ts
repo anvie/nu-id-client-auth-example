@@ -31,8 +31,14 @@ export default function NuSid<P extends Record<string, any> = NuSidProfile>(
           provider.callbackUrl,
           params,
           checks,
-          { exchangeBody: { client_id: options.clientId } }
+          {
+            exchangeBody: {
+              client_id: options.clientId,
+              client_secret: options.clientSecret,
+            },
+          }
         );
+        console.log("🚀 ~ file: NuSid.ts:41 ~ request ~ response", response)
         return { tokens: response };
       },
     },
@@ -40,12 +46,13 @@ export default function NuSid<P extends Record<string, any> = NuSidProfile>(
       url: `${env.NUID_API_URL}/v1/user/me`,
       params: { "user.fields": "profile_image_url" },
     },
-    profile({ data }) {
+    profile(data) {
+      console.log("🚀 ~ file: NuSid.ts:49 ~ profile ~ data", data)
       return {
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        image: data.image,
+        id: data.user.id,
+        name: data.user.name,
+        email: data.user.email,
+        image: data.user.image,
       };
     },
     checks: ["state"],
