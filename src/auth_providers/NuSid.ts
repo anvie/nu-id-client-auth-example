@@ -10,6 +10,7 @@ export interface NuSidProfile {
 export default function NuSid<P extends Record<string, any> = NuSidProfile>(
   options: OAuthUserConfig<P>
 ): OAuthConfig<P> {
+  const nuIdBaseUrl = env.NUID_API_URL.split("/").slice(0, 3).join("/");
   return {
     id: "nu.sid",
     name: "NU.ID",
@@ -57,8 +58,8 @@ export default function NuSid<P extends Record<string, any> = NuSidProfile>(
     },
     checks: ["state"],
     style: {
-      logo: `http://localhost:3000/img/next-auth-provider-logo.svg`,
-      logoDark: `http://localhost:3000/img/next-auth-provider-logo.svg`,
+      logo: `${nuIdBaseUrl}/img/next-auth-provider-logo.svg`,
+      logoDark: `${nuIdBaseUrl}/img/next-auth-provider-logo.svg`,
       bg: "#fff",
       text: "#1da1f2",
       bgDark: "#1da1f2",
