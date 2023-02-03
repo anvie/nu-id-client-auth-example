@@ -9,8 +9,6 @@ import { api } from "../utils/api";
 import { cn } from "../utils/cssutil";
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
-
   return (
     <>
       <Head>
@@ -28,19 +26,19 @@ const Home: NextPage = () => {
               "text-xl",
               "font-extrabold",
               "tracking-tight",
-              "text-white",
+              "text-gray-500",
               "sm:text-[3rem]"
             )}
           >
-            <span className={cn("text-[hsl(280,100%,70%)]")}>NU.ID Auth Client Demo</span>
+            <span className={cn("text-[hsl(280,100%,70%)]")}>
+              NU.ID Auth Client Demo
+            </span>
           </h1>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:gap-8">
             {/* <NUIAMQRCodeAuth /> */}
 
             <AuthShowcase />
           </div>
-
-          <Footer />
         </div>
       </main>
     </>
@@ -63,35 +61,29 @@ const NUIAMQRCodeAuth: React.FC = () => {
 const AuthShowcase: React.FC = () => {
   const { data: sessionData } = useSession();
 
-  const { data: secretMessage } = api.example.getSecretMessage.useQuery(
-    undefined, // no input
-    { enabled: sessionData?.user !== undefined }
-  );
-
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
+      <div className="py-10">
+        {sessionData && <h1 className="text-4xl">Welcome {sessionData.user?.name}</h1>}
+      </div>
+      <p className="text-center text-2xl text-gray-500">
+        {sessionData && (
+          <div className="flex flex-col gap-4 pb-5">
+          <div>your name: <span className="font-semibold">{sessionData.user?.name}</span></div>
+          <div>id: {sessionData.user?.id}</div>
+          <div>email: {sessionData.user?.email}</div>
+          </div>
+        )}
       </p>
       <button
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+        className={cn(
+          "rounded-full px-10 py-3 font-semibold no-underline transition",
+          sessionData ? "bg-red-500 text-white" : "bg-green-600 text-white"
+        )}
         onClick={sessionData ? () => void signOut() : () => void signIn()}
       >
-        {sessionData ? "Sign out" : "Sign in"}
+        {sessionData ? "SIGN OUT" : "SIGN IN"}
       </button>
     </div>
-  );
-};
-
-const Footer: React.FC = () => {
-  return (
-    <footer className={styles.footer}>
-      <div className="flex flex-col place-items-center items-center justify-center pt-10">
-        <div className="py-10 text-center">
-          Copyright &copy; 2023 NU-IAM-Vendor-Example. All rights reserved.
-        </div>
-      </div>
-    </footer>
   );
 };
