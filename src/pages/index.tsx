@@ -1,6 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import styles from "../styles/Home.module.css";
@@ -64,14 +65,29 @@ const AuthShowcase: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-4">
       <div className="py-10">
-        {sessionData && <h1 className="text-4xl">Welcome {sessionData.user?.name}</h1>}
+        {sessionData && (
+          <h1 className="text-4xl">Welcome {sessionData.user?.name}</h1>
+        )}
       </div>
       <p className="text-center text-2xl text-gray-500">
         {sessionData && (
-          <div className="flex flex-col gap-4 pb-5">
-          <div>your name: <span className="font-semibold">{sessionData.user?.name}</span></div>
-          <div>id: {sessionData.user?.id}</div>
-          <div>email: {sessionData.user?.email}</div>
+          <div className="flex flex-col items-center gap-4 pb-5">
+            {sessionData.user?.image && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={sessionData.user?.image}
+                alt=""
+                width={100}
+                height={100}
+              />
+            )}
+            <div>
+              your name:{" "}
+              <span className="font-semibold">{sessionData.user?.name}</span>
+            </div>
+            <div>id: {sessionData.user?.id}</div>
+            <div>email: {sessionData.user?.email}</div>
+            {/* <code>{JSON.stringify(sessionData)}</code> */}
           </div>
         )}
       </p>
