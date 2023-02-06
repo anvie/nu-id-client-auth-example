@@ -26,7 +26,6 @@ export default function NuSid<P extends Record<string, any> = NuSidProfile>(
     },
     token: {
       url: `${env.NUID_API_URL}/oauth/token`,
-      // TODO: Remove this
       async request({ client, params, checks, provider }) {
         const response = await client.oauthCallback(
           provider.callbackUrl,
@@ -39,7 +38,6 @@ export default function NuSid<P extends Record<string, any> = NuSidProfile>(
             },
           }
         );
-        console.log("🚀 ~ file: NuSid.ts:41 ~ request ~ response", response)
         return { tokens: response };
       },
     },
@@ -48,7 +46,6 @@ export default function NuSid<P extends Record<string, any> = NuSidProfile>(
       params: { "user.fields": "profile_image_url" },
     },
     profile(data) {
-      console.log("🚀 ~ file: NuSid.ts:49 ~ profile ~ data", data)
       return {
         id: data.user.id,
         name: data.user.name,
