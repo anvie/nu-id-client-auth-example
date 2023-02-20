@@ -48,16 +48,15 @@ const Home: NextPage = () => {
 
 export default Home;
 
-const NUIAMQRCodeAuth: React.FC = () => {
-  // return (<p className="py-5">{_L("home.scanqr")}</p>
-  //       {qrAuthCode.data ? (
-  //         <QRCode data={qrAuthCode.data} />
-  //       ) : (
-  //         <p>Loading QR Code...</p>
-  //       )})
-
-  return <></>;
-};
+// const NUIAMQRCodeAuth: React.FC = () => {
+//   return (<p className="py-5">{_L("home.scanqr")}</p>
+//         {qrAuthCode.data ? (
+//           <QRCode data={qrAuthCode.data} />
+//         ) : (
+//           <p>Loading QR Code...</p>
+//         )})
+//   return <></>;
+// };
 
 const AuthShowcase: React.FC = () => {
   const { data: sessionData } = useSession();
@@ -96,7 +95,7 @@ const AuthShowcase: React.FC = () => {
           "rounded-full px-10 py-3 font-semibold no-underline transition",
           sessionData ? "bg-red-500 text-white" : "bg-green-600 text-white"
         )}
-        onClick={sessionData ? () => void signOut() : () => void signIn()}
+        onClick={sessionData ? () => void signOut() : () => void signIn("nu.id")}
       >
         {sessionData ? "SIGN OUT" : "SIGN IN"}
       </button>
