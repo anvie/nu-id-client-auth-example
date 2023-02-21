@@ -50,7 +50,6 @@ export default function NuSid<P extends Record<string, any> = NuSidProfile>(
       params: { "user.fields": "profile_image_url" },
     },
     profile(data) {
-      console.log("🚀 ~ file: NuSid.ts:49 ~ profile ~ data", data)
       return {
         id: data.user.id,
         name: data.user.name,
