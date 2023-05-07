@@ -95,7 +95,7 @@ const AuthShowcase: React.FC = () => {
           "rounded-full px-10 py-3 font-semibold no-underline transition",
           sessionData ? "bg-red-500 text-white" : "bg-green-600 text-white"
         )}
-        onClick={sessionData ? () => void signOut() : () => void signIn("nu.id", { callbackUrl: "/dashboard" })}
+        onClick={sessionData ? () => void signOut() : () => void signIn("nu.id", { callbackUrl: "/" })}
       >
         {sessionData ? "SIGN OUT" : "SIGN IN"}
       </button>
