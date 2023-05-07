@@ -68,7 +68,7 @@ const AuthShowcase: React.FC = () => {
           <h1 className="text-4xl">Welcome {sessionData.user?.name}</h1>
         )}
       </div>
-      <p className="text-center text-2xl text-gray-500">
+      <div className="text-center text-2xl text-gray-500">
         {sessionData && (
           <div className="flex flex-col items-center gap-4 pb-5">
             {sessionData.user?.image && (
@@ -89,13 +89,13 @@ const AuthShowcase: React.FC = () => {
             {/* <code>{JSON.stringify(sessionData)}</code> */}
           </div>
         )}
-      </p>
+      </div>
       <button
         className={cn(
           "rounded-full px-10 py-3 font-semibold no-underline transition",
           sessionData ? "bg-red-500 text-white" : "bg-green-600 text-white"
         )}
-        onClick={sessionData ? () => void signOut() : () => void signIn("nu.id")}
+        onClick={sessionData ? () => void signOut() : () => void signIn("nu.id", { callbackUrl: "/dashboard" })}
       >
         {sessionData ? "SIGN OUT" : "SIGN IN"}
       </button>

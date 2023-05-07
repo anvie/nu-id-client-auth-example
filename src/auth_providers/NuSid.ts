@@ -7,7 +7,7 @@ export interface NuSidProfile {
   email: string;
 }
 
-export default function NuSid<P extends Record<string, any> = NuSidProfile>(
+export default function NuSidProvider<P extends Record<string, any> = NuSidProfile>(
   options: OAuthUserConfig<P>
 ): OAuthConfig<P> {
   const nuIdBaseUrl = env.NUID_API_URL.split("/").slice(0, 3).join("/");
@@ -26,24 +26,24 @@ export default function NuSid<P extends Record<string, any> = NuSidProfile>(
     },
     token: {
       url: `${env.NUID_API_URL}/oauth/token`,
-      // // TODO: Remove this
-      // async request({ client, params, checks, provider }) {
-      //   console.log("🚀 ~ file: NuSid.ts:31 ~ request ~ client", client)
-      //   console.log("🚀 ~ file: NuSid.ts:31 ~ request ~ options", options)
-      //   const response = await client.oauthCallback(
-      //     provider.callbackUrl,
-      //     params,
-      //     checks,
-      //     {
-      //       exchangeBody: {
-      //         client_id: options.clientId,
-      //         client_secret: options.clientSecret,
-      //       },
-      //     }
-      //   );
-      //   console.log("🚀 ~ file: NuSid.ts:41 ~ request ~ response", response)
-      //   return { tokens: response };
-      // },
+      // TODO: Remove this
+      async request({ client, params, checks, provider }) {
+        console.log("🚀 ~ file: NuSid.ts:31 ~ request ~ client", client)
+        console.log("🚀 ~ file: NuSid.ts:31 ~ request ~ options", options)
+        const response = await client.oauthCallback(
+          provider.callbackUrl,
+          params,
+          checks,
+          {
+            exchangeBody: {
+              client_id: options.clientId,
+              client_secret: options.clientSecret,
+            },
+          }
+        );
+        console.log("🚀 ~ file: NuSid.ts:41 ~ request ~ response", response)
+        return { tokens: response };
+      },
     },
     userinfo: {
       url: `${env.NUID_API_URL}/v1/user/me`,

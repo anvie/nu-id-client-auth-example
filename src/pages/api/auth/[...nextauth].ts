@@ -8,9 +8,6 @@ import { prisma } from "../../../server/db";
 
 import NuSidProvider from "../../../auth_providers/NuSid";
 
-console.log(`NUID_CLIENT_ID: ${env.NUID_CLIENT_ID}`)
-console.log(`NUID_CLIENT_SECRET: ${env.NUID_CLIENT_SECRET}`)
-
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
   callbacks: {
@@ -20,14 +17,20 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+    redirect({ url, baseUrl }) {
+      console.log("🚀 ~ file: [...nextauth].ts:21 ~ redirect ~ baseUrl:", baseUrl)
+      console.log("🚀 ~ file: [...nextauth].ts:21 ~ redirect ~ url:", url)
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url;
+      return `${baseUrl}/dashboard`;
+    },
   },
+
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    // DiscordProvider({
-    //   clientId: env.DISCORD_CLIENT_ID,
-    //   clientSecret: env.DISCORD_CLIENT_SECRET,
-    // }),
     /**
      * ...add more providers here
      *
@@ -40,10 +43,9 @@ export const authOptions: NextAuthOptions = {
     NuSidProvider({
       clientId: env.NUID_CLIENT_ID,
       clientSecret: env.NUID_CLIENT_SECRET,
-    })
+    }),
   ],
   debug: true,
 };
 
 export default NextAuth(authOptions);
-
