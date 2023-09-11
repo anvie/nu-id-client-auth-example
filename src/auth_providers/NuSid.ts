@@ -1,5 +1,5 @@
 import type { OAuthConfig, OAuthUserConfig } from "next-auth/providers";
-import { env } from "../env/server.mjs";
+import { env } from "@env/server.mjs";
 
 export interface NuSidProfile {
   id: string;
@@ -59,13 +59,14 @@ export default function NuSidProvider<P extends Record<string, any> = NuSidProfi
     },
     checks: ["state"],
     style: {
-      logo: `${nuIdBaseUrl}/img/next-auth-provider-logo.svg`,
-      logoDark: `${nuIdBaseUrl}/img/next-auth-provider-logo.svg`,
+      logo: `https://nu.id/img/next-auth-provider-logo.svg`,
+      logoDark: `https://nu.id/img/next-auth-provider-logo.svg`,
       bg: "#fff",
       text: "#1da1f2",
-      bgDark: "#1da1f2",
-      textDark: "#fff",
+      bgDark: "#fff",
+      textDark: "#555",
     },
     options,
   };
 }
+
